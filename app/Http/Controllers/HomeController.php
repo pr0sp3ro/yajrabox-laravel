@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use DataTables;
 
 class HomeController extends Controller
 {
@@ -12,10 +13,10 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     /**
      * Show the application dashboard.
@@ -24,10 +25,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        return view('home');
+    }
 
-        return view('home', [
-            "users" => $users
-        ]);
+    public function getUsers() {
+        return DataTables::of(User::query())
+            ->setRowClass('{{ $id % 2 == 0 ? "alert-success" : "alert-warning" }}')
+            ->make(true);
     }
 }

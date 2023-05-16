@@ -16,17 +16,12 @@
 
                     <table class="table-border" id="myTable">
                         <thead>
+                            <th>Id</th>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Created At</th>
+                            <th>Updated At</th>
                         </thead>
-                        <tbody>
-                        @foreach($users as $user)
-                            <tr>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                            </tr>
-                        @endforeach
-                        </tbody>
                     </table>
                 </div>
             </div>
@@ -34,3 +29,22 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    $(document).ready( function () {
+        $('#myTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: '{!! route('home.users') !!}',
+            columns: [
+                { data: 'id', name: 'id' },
+                { data: 'name', name: 'name' },
+                { data: 'email', name: 'email' },
+                { data: 'created_at', name: 'created_at' },
+                { data: 'updated_at', name: 'updated_at' }
+            ]
+        });
+    } );
+</script>
+@endpush
