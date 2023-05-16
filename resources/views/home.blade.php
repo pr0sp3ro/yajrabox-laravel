@@ -32,11 +32,11 @@
 
 @push('scripts')
 <script>
-    $(document).ready( function () {
+    $(document).ready(function () {
         $('#myTable').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '{!! route('home.users') !!}',
+            ajax: "{!! route('home.get.users') !!}",
             columns: [
                 { data: 'id', name: 'id' },
                 { data: 'name', name: 'name' },
@@ -45,6 +45,6 @@
                 { data: 'updated_at', name: 'updated_at' }
             ]
         });
-    } );
+    });
 </script>
 @endpush
