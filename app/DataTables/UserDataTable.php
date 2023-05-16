@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -22,8 +23,17 @@ class UserDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
-        return (new EloquentDataTable($query))
-            ->orderColumn('name', false);
+        $dataTable = new EloquentDataTable($query);
+
+        $dataTable->addColumn('created_at', function ($user) {
+            return Carbon::parse($user->created_at)->diffForHumans();
+        });
+
+        $dataTable->addColumn('updated_at', function ($user) {
+            return Carbon::parse($user->updated_at)->diffForHumans();
+        });
+
+        return $dataTable;
     }
 
     /**
