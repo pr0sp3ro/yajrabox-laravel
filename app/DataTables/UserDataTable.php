@@ -23,6 +23,8 @@ class UserDataTable extends DataTable
      */
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
+        $query->orderBy('id', 'asc'); // Sort by ID column in ascending order
+
         $dataTable = new EloquentDataTable($query);
 
         $dataTable->addColumn('created_at', function ($user) {
