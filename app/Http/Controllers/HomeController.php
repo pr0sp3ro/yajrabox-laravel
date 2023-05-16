@@ -30,7 +30,16 @@ class HomeController extends Controller
 
     public function getUsers() {
         return DataTables::of(User::query())
-            ->setRowClass('{{ $id % 2 == 0 ? "alert-success" : "alert-warning" }}')
+            ->setRowId(function ($user) {
+                return $user->id;
+            })
+            ->setRowAttr(['align' => 'center'])
+            ->editColumn('created_at', function (User $user) {
+                return $user->created_at->diffForHumans();
+            })
+            ->editColumn('updated_at', function (User $user) {
+                return $user->updated_at->diffForHumans();
+            })
             ->make(true);
     }
 }
